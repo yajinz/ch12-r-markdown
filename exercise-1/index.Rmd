@@ -19,7 +19,9 @@ GetReview <- function(movie) {
   # The base URL is https://api.nytimes.com/svc/movies/v2/reviews/search.json?
   # Your parameters should include a "query" and an "api_key"
   # Note: the HTTR library will take care of spaces in the arguments
-  # See the interactive console for more detail:https://developer.nytimes.com/movie_reviews_v2.json#/Console/GET/reviews/search.json
+
+  # See the interactive console for more detail:
+  # https://developer.nytimes.com/movie_reviews_v2.json#/Console/GET/reviews/search.json
   
   
   # Request data using your search query
@@ -27,7 +29,8 @@ GetReview <- function(movie) {
   
   # Flatten the data stored in the `$results` key of the data returned to you
   
-  # From the most recent review, store the headline, short summary, and link to full article each in their own variables
+  # From the most recent review, store the headline, short summary, and link to full article
+  # each in their own variables
 
   # Return an list of the three pieces of information from above
   
