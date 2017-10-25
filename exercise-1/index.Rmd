@@ -43,7 +43,9 @@ GetReview <- function(movie) {
 ## you should not insert this in the code and upload to github.
 api.key <- readLines("~/Documents/keys/nyt_movie_reviews_api")
 
-### Create a variable called `movie.info` by passing the name of your movie to your GetReview function
+### Store the name of the movie in a variable
+
+### Create a variable called `movie.info` by passing the movie name variable to your GetReview function
 
 
 ```
