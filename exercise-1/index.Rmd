@@ -10,33 +10,40 @@ library(jsonlite)
 library(dplyr)
 library(httr)
 
-# Store a variable "movie"
-movie <- 'Almost Famous'
-# Write a function that allows you to specify a movie, then does the following:
+### Write a function that allows you to specify a movie, then does the following:
 GetReview <- function(movie) {
+   ## movie: name of the movie
   
   # Construct a search query using YOUR api key
   # The base URL is https://api.nytimes.com/svc/movies/v2/reviews/search.json?
   # Your parameters should include a "query" and an "api_key"
-  # Note: the HTTR library will take care of spaces in the arguments
+   ## Note: the HTTR library will take care of spaces in the arguments
+   ## Use YOUR api key.  
 
-  # See the interactive console for more detail:
-  # https://developer.nytimes.com/movie_reviews_v2.json#/Console/GET/reviews/search.json
+   ## Try the interactive console:
+   ## https://developer.nytimes.com/movie_reviews_v2.json#/Console/GET/reviews/search.json
+   ## it will display the result in json format
+   ## you can figure out how to extract the corresponding R list components
+  
+   ## Request data using your search query
   
   
-  # Request data using your search query
+   ## Flatten the data stored in the `$results` key of the data returned to you
   
-  
-  # Flatten the data stored in the `$results` key of the data returned to you
-  
-  # From the most recent review, store the headline, short summary, and link to full article
-  # each in their own variables
+   ## From the most recent review, store the headline, short summary, and link to full article
+   ## each in their own variables
 
-  # Return an list of the three pieces of information from above
+   ## Return an list of the three pieces of information from above:
+   ## return(list(summary, headline, link))
   
 }
 
+## get your API key.
+## Mine is stored in the file "nyt_movie_reviews_api"
+## you should not insert this in the code and upload to github.
+api.key <- readLines("~/Documents/keys/nyt_movie_reviews_api")
 
-# Create a variable called `movie.info` by passing your movie to your GetReview function
+### Create a variable called `movie.info` by passing the name of your movie to your GetReview function
+
 
 ```
