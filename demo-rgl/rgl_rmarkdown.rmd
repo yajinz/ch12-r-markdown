@@ -1,0 +1,89 @@
+---
+title: "RGL and Rmarkdown"
+subtitle: "Interactive 3D plotting"
+author: Ott Toomet
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output: 
+  html_document:
+    highlight: tango
+    df_print: kable
+    fig_caption: false
+toc: true
+urlcolor: blue
+---
+
+# RGL library
+
+* you have to install _phantomjs_
+
+3D scatterplot with spheres
+
+```{r}
+library(rgl)
+rgl::setupKnitr()
+                           # let rgl and knitr talk together
+with(iris,
+     plot3d(Sepal.Length, Sepal.Width, Petal.Length,
+                           # dimensions petals
+            type="s",
+                           # spheres
+            col=1 + as.numeric(Species),
+                           # color according to species
+            alpha=0.5
+                           # 50% transparent spheres
+            )
+     )
+rglwidget()
+                           # Output the webGL widget
+```
+
+Try to rotate (with mouse), zoom (with mouse scrolling)
+
+
+# 3D surface of parabola
+
+The same parabola we used for `contour`
+
+```{r}
+f <- function(x, y) x^2 + 2*x*y + 3*y^2
+x <- seq(-4, 4, length.out=100)
+y <- seq(-4, 4, length.out=100)
+z <- outer(x, y, f)
+persp3d(x, y, z, color="green")
+rglwidget(elementId="surface")
+```
+
+
+# 3D iso-surface plot example
+
+3d countour plot (analogous to 2d `countour`) is living in _misc3d_
+package.
+
+Note: the calculations take a bit of time.
+
+```{r}
+A <- matrix(1:9, 3, 3) + 2*diag(3)
+A
+quadForm <- function(x, y, z)
+   t(c(x,y,z)) %*% A %*% c(x,y,z)
+                           # compute an elongated 3d parabola 
+levels <- c(10, 60, 140)
+                           # draw the surfaces where the parabola has these
+                           # values
+aspect3d("iso")
+misc3d::contour3d(function(x, y, z) {
+           parallel::mcmapply(quadForm, x, y, z,
+                              mc.cores=parallel::detectCores()/2) } ,
+                           # need to compute function values on 100x100x100 matrix
+                           # do it in parallel
+           level=levels,
+           x = seq(-4, 4, length=100),
+           y = seq(-4, 4, length=100),
+           z = seq(-4, 4, length=100),
+           color = RColorBrewer::brewer.pal(length(levels), "Set3"),
+           alpha=0.5
+           )
+rglwidget(elementId="3dcontour")
+```
+
+Note: requires fast graphics.
