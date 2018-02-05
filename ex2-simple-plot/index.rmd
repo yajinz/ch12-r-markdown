@@ -27,35 +27,59 @@ The mean of these numbers is `r mean(x)`.
 
 ## Histogram
 
-Create a histogram of the normals above.  Use good descriptive
-labels.  Do _not_ show your code!
+> Create a histogram of the normals above.  Use good descriptive
+> labels.  Do _not_ show your code!
+
+```{r, echo=FALSE}
+hist(x,
+     xlab="random value", ylab="count", main=paste(length(x), "random normals"))
+```
 
 
 ## Random uniform numbers
 
-Create a large number of random uniform numbers.  Create a histogram
-of the result.  You may want to play with `breaks` option of the
-`hist` function.  Make your figure large: explore `fig.width` and
-`fig.height` chunk options.
+> Create a large number of random uniform numbers.  Create a histogram
+> of the result.  You may want to play with `breaks` option of the
+> `hist` function.  Make your figure large: explore `fig.width` and
+> `fig.height` chunk options.
+
+```{r fig.width=15, fig.heigth=12}
+y <- runif(10000)
+hist(y, breaks=100,
+     xlab="random value", ylab="count", main=paste(length(y), "random uniforms"))
+```
 
 
 ## Scatterplot
 
-Create a scatterplot of a large number of random normals, i.e. pick
-random normal $x$, random normal $y$, and plot x versus y.
+> Create a scatterplot of a large number of random normals, i.e. pick
+> random normal $x$, random normal $y$, and plot x versus y.
+
+```{r}
+n <- 1e4
+x <- rnorm(n)
+y <- rnorm(n)
+plot(x, y, main="random normals")
+```
 
 
 ## Fix the YAML header
 
-Fix the YAML header of this file.  Give it a descriptive title,
-correct author name, and change some of the formating options.
+> Fix the YAML header of this file.  Give it a descriptive title,
+> correct author name, and change some of the formating options.
 
 
 ## Throw a die
 
-Throw a die 10 times.  Report inline how many 6-s you got.
+> Throw a die 10 times.  Report inline how many 6-s you got.
+> 
+> Note: you may want to use `sample` function to simulate die rolls.
 
-Note: you may want to use `sample` function to simulate die rolls.
+```{r}
+r <- sample(6, 10, replace=TRUE)
+```
+
+I got `r sum(r == 6)` sixes.
 
 
 
