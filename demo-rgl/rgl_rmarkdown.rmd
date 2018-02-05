@@ -72,14 +72,18 @@ levels <- c(10, 60, 140)
                            # values
 aspect3d("iso")
 misc3d::contour3d(function(x, y, z) {
-           parallel::mcmapply(quadForm, x, y, z,
-                              mc.cores=parallel::detectCores()/2) } ,
+           mapply(quadForm, x, y, z)
+           ## if you wish, run the computations in parallel
+           ## parallel::mcmapply(quadForm, x, y, z,
+           ##                    mc.cores=parallel::detectCores()/2) } ,
                            # need to compute function values on 100x100x100 matrix
                            # do it in parallel
            level=levels,
-           x = seq(-4, 4, length=100),
-           y = seq(-4, 4, length=100),
-           z = seq(-4, 4, length=100),
+           x = seq(-4, 4, length=20),
+                           # 20 is grid size.  If you have powerful gaming pc,
+                           # increase these to 100 to get smoother image
+           y = seq(-4, 4, length=20),
+           z = seq(-4, 4, length=20),
            color = RColorBrewer::brewer.pal(length(levels), "Set3"),
            alpha=0.5
            )
