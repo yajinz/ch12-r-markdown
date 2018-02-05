@@ -12,17 +12,35 @@ toc: true
 urlcolor: blue
 ---
 
-# RGL library
+# Introduction
 
-* you have to install _phantomjs_
+This demo introduces using _rgl_ library with knitr.  _rgl_ contains
+various openGL-based interactive 3d graphics display routines.  It's
+installation may be a bit tough, on compiled systems you need to
+install a number of graphics-related libraries, and the recent
+incarnations of it also need _pantomjs_, a javascript library.
+Installation of the latter is possible from within R though.  Needless
+to say, your graphics card driver must support 3d acceleration.
+
+3D is also more memory, cpu, and graphics card intensive.  While
+simple animations should work smoothly on all laptops (I have done
+some with Pentium 3 PC of early 2000-s), many smooth surfaces and
+visual effects require a fast graphics card.
+
+```{r setup}
+library(rgl)
+rgl::setupKnitr()
+                           # let rgl and knitr talk together
+```
+
+
+# Some example functions
 
 3D scatterplot with spheres
 
 ```{r}
-library(rgl)
-rgl::setupKnitr()
-                           # let rgl and knitr talk together
 with(iris,
+                           # 'iris' is a standard dataset
      plot3d(Sepal.Length, Sepal.Width, Petal.Length,
                            # dimensions petals
             type="s",
@@ -42,7 +60,7 @@ Try to rotate (with mouse), zoom (with mouse scrolling)
 
 # 3D surface of parabola
 
-The same parabola we used for `contour`
+3D image of the same parabola we used for `contour`.
 
 ```{r}
 f <- function(x, y) x^2 + 2*x*y + 3*y^2
@@ -59,7 +77,12 @@ rglwidget(elementId="surface")
 3d countour plot (analogous to 2d `countour`) is living in _misc3d_
 package.
 
-Note: the calculations take a bit of time.
+Note: the calculations take a bit of time, and the resulting html file
+is huge.
+
+If you wish, you can experiment with larger grid size but that
+requires fast CPU and fast graphics.  But it should be no issue with
+powerful modern gaming computers!
 
 ```{r}
 A <- matrix(1:9, 3, 3) + 2*diag(3)
@@ -70,24 +93,23 @@ quadForm <- function(x, y, z)
 levels <- c(10, 60, 140)
                            # draw the surfaces where the parabola has these
                            # values
+nGrid <- 20
+                           # Grid size.  If you have powerful gaming pc,
+                           # increase these to 100 to get smoother image
 aspect3d("iso")
 misc3d::contour3d(function(x, y, z) {
-           mapply(quadForm, x, y, z)
-           ## if you wish, run the computations in parallel
+           mapply(quadForm, x, y, z) },
+                           # compute the function values on 3d grid
+           ## if you wish, run the computations in parallel:
+           ## replace the mapply above with:
            ## parallel::mcmapply(quadForm, x, y, z,
            ##                    mc.cores=parallel::detectCores()/2) } ,
-                           # need to compute function values on 100x100x100 matrix
-                           # do it in parallel
            level=levels,
-           x = seq(-4, 4, length=20),
-                           # 20 is grid size.  If you have powerful gaming pc,
-                           # increase these to 100 to get smoother image
-           y = seq(-4, 4, length=20),
-           z = seq(-4, 4, length=20),
+           x = seq(-4, 4, length=nGrid),
+           y = seq(-4, 4, length=nGrid),
+           z = seq(-4, 4, length=nGrid),
            color = RColorBrewer::brewer.pal(length(levels), "Set3"),
            alpha=0.5
            )
 rglwidget(elementId="3dcontour")
 ```
-
-Note: requires fast graphics.
