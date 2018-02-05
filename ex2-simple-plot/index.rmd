@@ -16,9 +16,14 @@ urlcolor: blue
 
 ## Random normals
 
-Create 1000 random normal numbers.  Create it in a code block and show
-the code.  Display a full sentence where you tell what is the mean of
-these numbers.
+> Create 1000 random normal numbers.  Create it in a code block and show
+> the code.  Display a full sentence where you tell what is the mean of
+> these numbers.
+
+```{r}
+x <- rnorm(1000)
+```
+The mean of these numbers is `r mean(x)`.
 
 ## Histogram
 
