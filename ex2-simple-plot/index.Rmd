@@ -20,11 +20,20 @@ Create 1000 random normal numbers.  Create it in a code block and show
 the code.  Display a full sentence where you tell what is the mean of
 these numbers.
 
+```{r echo=TRUE}
+x <- rnorm(1000)
+```
+the mean is `r mean(x)`
+
+
+
 ## Histogram
 
 Create a histogram of the normals above.  Use good descriptive
 labels.  Do _not_ show your code!
-
+```{r echo=FALSE}
+hist(x)
+```
 
 ## Random uniform numbers
 
